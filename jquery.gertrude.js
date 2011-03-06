@@ -58,7 +58,11 @@
 			var el = $(this);
 			var found = $.gertrude.textToEntities( entities, tokeniser, normaliser, el.val() ); // get the current entity set
 			if ( found.length > 0 && !$.gertrude.entitylistequals(found,el.data("gertrude.entities")) ) {
-				el.trigger('entitychange',[found]); // if there's a new entity then trigger the event on this DOM object
+				el.trigger({
+					type:"entitychange",
+					found:found,
+					latest:found[found.length-1] // assumes incorrectly that the latest is the new one?
+				}); // if there's a new entity then trigger the event on this DOM object
 			}
 			el.data("gertrude.entities", found); // save to do a diff later
 		});
